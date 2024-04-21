@@ -1,0 +1,30 @@
+// syntax aquí representa la versión de Protobuf que estamos usando
+syntax = "proto3";
+
+// Esto es específico de Java
+// el paquete donde generar automáticamente el código a partir del archivo ".proto"
+option java_package = "com.proto.saludo";
+
+// Contiene un atributo, "nombre" que es cadena.
+// El cliente envía el objeto de tipo "SaludoRequest" al servidor
+message SaludoRequest {
+    string nombre = 1;
+}
+
+// El servidor devolverá el "SaludoResponse" que contendrá un único atributo "reesultado".
+// Se supone que el servidor envía el objeto de tipo "SaludoResponse" al cliente.
+message SaludoResponse {
+    string resultado = 1;
+}
+
+// Este bloque representa el nombre del servicio "SaludoService"
+// y el nombre de la función "saludo()" que se puede llamar.
+// La función "saludo()" toma la entrada de tipo "SaludoRequest" y devuelve la salida de tipo "SaludoResponse".
+service SaludoService {
+    rpc saludo(SaludoRequest) returns (SaludoResponse);
+    
+    //Este es el nuevo método a implementar
+    rpc saludoStream(SaludoRequest) returns (stream SaludoResponse);
+
+    rpc saludoArchivoStream(SaludoRequest) returns (stream SaludoResponse);
+}
